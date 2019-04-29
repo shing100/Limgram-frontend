@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { ThemeProvider } from "styled-components"
+import GlobalStyles from '../../Styles/GlobalStyles';
+import Theme from '../../Styles/Theme';
 
-class AppContainer extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            <code>class hello world</code>
-          </p>
-        </header>
-      </div>
-    );
-  }
-}
+const AppContainer = () => (
+  <ThemeProvider theme={Theme}>
+    <GlobalStyles />
+  </ThemeProvider>
+);
 
 export default AppContainer;
