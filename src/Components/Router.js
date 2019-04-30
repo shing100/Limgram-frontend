@@ -25,7 +25,7 @@ const AppRouter = ({ isLoggedIn }) => (
 )
 
 // eslint-disable-next-line react/no-typos
-AppRouter.PropTypes = {
+AppRouter.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired
 };
 
