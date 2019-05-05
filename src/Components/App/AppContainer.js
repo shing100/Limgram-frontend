@@ -1,9 +1,11 @@
 import React from 'react';
 import styled, { ThemeProvider } from "styled-components";
-import GlobalStyles from '../../Styles/GlobalStyles';
-import Theme from '../../Styles/Theme';
-import AppRouter from '../Routes';
 import { useQuery } from 'react-apollo-hooks';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import GlobalStyles from '../../Styles/GlobalStyles';
+import AppRouter from '../Routes';
+import Theme from '../../Styles/Theme';
 import { QUERY } from './AppQueris';
 import Footer from "../Footer";
 
@@ -23,6 +25,7 @@ const AppContainer = () => {
           <GlobalStyles />
           <AppRouter isLoggedIn={isLoggedIn} />
           <Footer />
+          <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
         </Wrapper>
       </ThemeProvider>
     )
