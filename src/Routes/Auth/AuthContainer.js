@@ -33,11 +33,15 @@ export default () => {
         }
     })
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         e.preventDefault();
         if (action === "logIn") {
             if (email !== "") {
-                requestSecret();
+                try{
+                    await requestSecret();
+                } catch {
+                    toast.error("Could not complete this action");
+                }
             } else {
                 toast.error("Email is required");
             }
@@ -48,7 +52,11 @@ export default () => {
                 firstName.value !== "" &&
                 lastName.value !== ""
             ) {
-                createAccount();
+                try {
+                    await createAccount();
+                } catch {
+                    toast.error("Could not complete this action")
+                }
             } else {
                 toast.error("All field are required");
             }
