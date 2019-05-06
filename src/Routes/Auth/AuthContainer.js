@@ -18,7 +18,7 @@ export default () => {
                 toast.error("You dont have an account yet, create one");
                 setTimeout(() => setAction("signup"), 3000);
             }else {
-                toast.success("Welcome! Limgram!");
+                toast.success("Welcome!");
             }
         },
         variables: { email : email.value }
@@ -39,8 +39,8 @@ export default () => {
             if (email !== "") {
                 try{
                     await requestSecret();
-                } catch {
-                    toast.error("Could not complete this action");
+                } catch(error) {
+                    toast.error("Could not complete this action", error.message);
                 }
             } else {
                 toast.error("Email is required");
@@ -55,7 +55,7 @@ export default () => {
                 try {
                     await createAccount();
                 } catch {
-                    toast.error("Could not complete this action")
+                    toast.error("Could not complete this create action")
                 }
             } else {
                 toast.error("All field are required");
