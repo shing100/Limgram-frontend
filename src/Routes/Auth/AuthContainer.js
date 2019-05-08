@@ -11,20 +11,13 @@ export default () => {
     const firstName = useInput("");
     const lastName = useInput("");
     const email = useInput("");
-    const requestSecret = useMutation(LOG_IN, { 
-        update: (_, { data }) => {
-            const { requestSecret: { ok } } = data;
-            if(!ok){
-                toast.error("You dont have an account yet, create one");
-                setTimeout(() => setAction("signup"), 3000);
-            }else {
-                toast.success("Welcome! Limgram!");
-            }
-        },
+    const secret = useInput("");
+
+    const requestSecretMutation = useMutation(LOG_IN, { 
         variables: { email : email.value }
     });
 
-    const createAccount = useMutation(CREATE_ACCOUNT, {
+    const createAccountMutataion = useMutation(CREATE_ACCOUNT, {
         variables: {
             email: email.value,
             username: username.value,
@@ -38,9 +31,17 @@ export default () => {
         if (action === "logIn") {
             if (email !== "") {
                 try{
-                    await requestSecret();
-                } catch {
-                    toast.error("Could not complete this action");
+                    const { data : { requestSecret : { ok } } } = await requestSecretMutation();
+                    if(!ok){
+                        toast.error("You dont have an account yet, create one");
+                        setTimeout(() => setAction("signup"), 3000);
+                    }else {
+                        toast.success("Welcome! check your inbox for your login secret!");
+                        setAction("confirm");
+                    }
+                } catch(e) {
+                    //toast.error("Could not complete this action try again");
+                    toast.error(e.message);
                 }
             } else {
                 toast.error("Email is required");
@@ -53,9 +54,15 @@ export default () => {
                 lastName.value !== ""
             ) {
                 try {
-                    await createAccount();
-                } catch {
-                    toast.error("Could not complete this action")
+                    const { data : { createAccount : { ok } } } = await createAccountMutataion();
+                    if(!ok){
+                        toast.error("Can't create account!");
+                    }else {
+                        toast.success("Account created! Log In now!");
+                        setTimeout(() => setAction("logIn"), 3000);
+                    }
+                } catch(e) {
+                    toast.error(`Could not complete this action ${e.message}`);
                 }
             } else {
                 toast.error("All field are required");
@@ -71,6 +78,7 @@ export default () => {
             firstName={firstName}
             lastName={lastName}
             email={email}
+            secret={secret}
             onSubmit={onSubmit}
         />
     )
