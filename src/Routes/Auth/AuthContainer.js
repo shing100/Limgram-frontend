@@ -54,7 +54,6 @@ export default () => {
                 lastName.value !== ""
             ) {
                 try {
-<<<<<<< HEAD
                     const { data : { createAccount : { ok } } } = await createAccountMutataion();
                     if(!ok){
                         toast.error("Can't create account!");
@@ -64,11 +63,6 @@ export default () => {
                     }
                 } catch(e) {
                     toast.error(`Could not complete this action ${e.message}`);
-=======
-                    await createAccount();
-                } catch {
-                    toast.error("Could not complete this create action")
->>>>>>> 7255f4f5a1fb10be8362720964d7dcf603dcca91
                 }
             } else {
                 toast.error("All field are required");
