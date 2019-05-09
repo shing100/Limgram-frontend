@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useMutation } from "react-apollo-hooks";
 import { toast } from "react-toastify";
 import useInput from "../../Hooks/useInput";
-import { LOG_IN, CREATE_ACCOUNT } from "./AuthQueries";
+import { LOG_IN, CREATE_ACCOUNT, CONFIRM_SECRET, LOCAL_LOG_IN } from "./AuthQueries";
 import AuthPresenter from "./AuthPresenter";
 
 export default () => {
@@ -26,8 +26,18 @@ export default () => {
         }
     })
 
+    const confirmSecretMutation = useMutation(CONFIRM_SECRET, {
+        variables: {
+            email: email.value,
+            secret: secret.value
+        }
+    })
+
+    const localLogInMutation = useMutation(LOCAL_LOG_IN);
+
     const onSubmit = async(e) => {
         e.preventDefault();
+        // logIn action
         if (action === "logIn") {
             if (email !== "") {
                 try{
@@ -36,7 +46,7 @@ export default () => {
                         toast.error("You dont have an account yet, create one");
                         setTimeout(() => setAction("signup"), 3000);
                     }else {
-                        toast.success("Welcome! check your inbox for your login secret!");
+                        toast.success("check your inbox for your login secret!");
                         setAction("confirm");
                     }
                 } catch(e) {
@@ -46,6 +56,7 @@ export default () => {
             } else {
                 toast.error("Email is required");
             }
+        // signUp action
         } else if (action === "signUp") {
             if (
                 email.value !== "" &&
@@ -66,6 +77,25 @@ export default () => {
                 }
             } else {
                 toast.error("All field are required");
+            }
+        // confirm action
+        } else if(action === "confirm") {
+            if(secret.value !== ""){
+                try {
+                    const { data : { confirmSecret : { ok, token } } } = await confirmSecretMutation();
+                    if(!ok){
+                        toast.error("Cant confirm secret! check again")
+                    }else {
+                        if(token){
+                            localLogInMutation({ variables: { token }});
+                            toast.success("Welcome!");
+                        }else {
+                            toast.error("plz check your secret word!");
+                        }
+                    }
+                } catch {
+                    toast.error("Cant confirm secret! check again");
+                }
             }
         }
     }
