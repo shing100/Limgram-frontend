@@ -10,6 +10,9 @@ instagram clone with react, react-hooks
 - react-toastify
     - https://github.com/fkhadra/react-toastify
 
+- icon
+    - https://iconmonstr.com/
+
 ## install
 - yarn add apollo-boost 
 - yarn add graphql react-apollo-hooks 
@@ -17,3 +20,5 @@ instagram clone with react, react-hooks
 - yarn add react-helmet react-router-dom react-scripts rl-react-helmet prop-types
 - yarn add styled-components styled-reset apollo-boost
 - yarn add react-toastify
+
+
