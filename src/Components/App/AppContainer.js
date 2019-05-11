@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { ThemeProvider } from "styled-components";
+import { HashRouter as Router } from "react-router-dom";
 import { useQuery } from 'react-apollo-hooks';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,10 +9,11 @@ import AppRouter from '../Routes';
 import Theme from '../../Styles/Theme';
 import { QUERY } from './AppQueris';
 import Footer from "../Footer";
+import Header from "../Header";
 
 const Wrapper = styled.div `
     margin: 0 auto;
-    max-width: 935px;
+    max-width: ${props => props.theme.maxWidth};
     width: 100%;
 `;
 
@@ -21,12 +23,19 @@ const AppContainer = () => {
 
     return (
       <ThemeProvider theme={Theme}>
-        <Wrapper>
+        <>
           <GlobalStyles />
-          <AppRouter isLoggedIn={isLoggedIn} />
-          <Footer />
+          <Router>
+            <>
+              <Header />
+              <Wrapper>
+                <AppRouter isLoggedIn={isLoggedIn} />
+                <Footer />
+              </Wrapper>
+            </>
+          </Router>
           <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
-        </Wrapper>
+        </>
       </ThemeProvider>
     )
 }
