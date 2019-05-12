@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import Input from "./Input";
 import useInput from "../Hooks/useInput";
 import { Compass, HeartEmpty, User, Logo } from "./Icons";
+import { useQuery } from "react-apollo-hooks";
 
 const Header = styled.header`
     width: 100%;
@@ -60,8 +61,22 @@ const HeaderLink = styled(Link)`
     }
 `;
 
+const ME = gql`
+    {
+        me {
+            ok
+            user {
+                username
+            }
+        }
+    }
+`;
+
 export default withRouter(({history}) => {
     const search = useInput("");
+    const { data } = useQuery(ME);
+    //console.log(meQuery);
+
     const onSearchSubmit = (e) => {
         e.preventDefault();
         history.push(`/search?term=${search.value}`);
@@ -87,9 +102,15 @@ export default withRouter(({history}) => {
                     <HeaderLink to="/notifications">
                         <HeartEmpty />
                     </HeaderLink>
-                    <HeaderLink to="/username">
-                        <User />
-                    </HeaderLink>
+                    {data.me.ok ? (
+                        <HeaderLink to="/username">
+                            <User />
+                        </HeaderLink> 
+                    ) : (
+                        <HeaderLink to={data.me.user.username}>
+                            <User />
+                        </HeaderLink>
+                    )}
                 </HeaderColumn>
             </HeaderWrapper>
         </Header>

@@ -13,6 +13,9 @@ instagram clone with react, react-hooks
 - icon
     - https://iconmonstr.com/
 
+- apollographql 
+    - https://www.apollographql.com/docs/react/essentials/get-started
+
 ## install
 - yarn add apollo-boost 
 - yarn add graphql react-apollo-hooks 
