@@ -1,4 +1,5 @@
 import React from "react";
+import Helmet from "react-helmet";
 import styled from "styled-components";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
@@ -50,6 +51,9 @@ export default () => {
     if(loading){
         return (
             <Wrapper>
+                 <Helmet>
+                    <title>Feed | Limgram</title>
+                </Helmet>
                 {loading && <Loader />}
                 {!loading && data && data.seeFeed 
                     && data.seeFeed.map(post => 
@@ -57,6 +61,8 @@ export default () => {
                             <Post 
                                 key={post.id} 
                                 id={post.id} 
+                                location={post.location}
+                                caption={post.caption}
                                 user={post.user} 
                                 files={files}
                                 likeCount={likeCount}
