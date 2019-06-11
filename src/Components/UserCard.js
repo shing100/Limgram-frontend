@@ -11,7 +11,11 @@ const UserCard = ({ username, isFollowing, url, isSelf }) => (
     <Card>
         <Avatar url={url} />
         <FatText text={username} />
+<<<<<<< HEAD
         {!isSelf && <Button text={isFollowing ? "Unfollow" : "Follow"} />}
+=======
+            {!isSelf && <Button text={isFollowing ? "Unfollow" : "Follow"} />}
+>>>>>>> 663d38f0d333e6b9880a8713ae064c93764ecad5
     </Card>
 );
 

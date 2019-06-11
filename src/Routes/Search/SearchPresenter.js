@@ -52,6 +52,10 @@ const SearchPresenter = ({ searchTerm, loading, data }) => {
     );
   }
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 663d38f0d333e6b9880a8713ae064c93764ecad5
 
 SearchPresenter.propTypes = {
   searchTerm: PropTypes.string,
